@@ -3,10 +3,17 @@
         <h1 class="title">Liste des stations</h1>
     </ion-header-bar>
     <ion-content>
-        <ion-list>
-            <ion-item ng-repeat="station in stations">
+        <div class="card" ng-repeat="station in stations">
+            <div class="item item-divider">
                 {{station.name}}
-            </ion-item>
-        </ion-list>
+            </div>
+            <div class="item item-text-wrap">
+                {{ station.address}} <br />
+                {{ station.availableBikes}}<br />
+                {{ station.availableFreeSpots}}<br />
+                {{ station.open}}<br />
+                {{ station.banking}}
+            </div>
+        </div>
     </ion-content>
 </ion-pane>
