@@ -8,11 +8,11 @@
                 {{station.name}}
             </div>
             <div class="item item-text-wrap">
-                {{ station.address}} <br />
-                {{ station.availableBikes}}<br />
-                {{ station.availableFreeSpots}}<br />
-                {{ station.open}}<br />
-                {{ station.banking}}
+                <b>Adresse : </b>{{ station.address}} <br />
+                <b>Nombre de vélos disponible : </b>{{ station.availableBikes}}<br />
+                <b>Nombre d'emplacements libre : </b>{{ station.availableFreeSpots}}<br />
+                <b>Ouvert : </b>{{ station.open ? 'Oui' : 'Non'}}<br />
+                <b>Accepte la CB : </b>{{ station.banking ? 'Oui' : 'Non'}}
             </div>
         </div>
     </ion-content>
