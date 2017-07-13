@@ -87,13 +87,12 @@ app.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, countri
                 .then(function (response) {
 
                     contract = mapService.getNearest(response.data, latLng, false, $scope);
-                    console.log("Plus proche " + contract.name);
 
                     countriesService.getStations(contract.id)
                         .then(function (response) {
 
                             station = mapService.getNearest(response.data, latLng, true, $scope);
-                            console.log("Plus proche " + station.name);
+
                         })
                         .catch(function (error) {
                             console.error(error.message);

@@ -36,14 +36,6 @@ app.service("countriesService", function ($http, apiHost){
         return $http.get(apiHost + 'contracts');
     };
 });
-app.service("streeviewService", function ($http){
-    /**
-     * @return promise
-     */
-    this.getPicture = function (latitude, longitude) {
-        return $http.get("https://maps.googleapis.com/maps/api/streetview?size=600x300&location=" + latitude + "," + longitude +"10.013988&heading=151.78&pitch=-0.76");
-    };
-});
 
 app.service("mapService", function ($http, apiHost){
 
@@ -104,7 +96,7 @@ app.service("mapService", function ($http, apiHost){
                         }
                         $scope.prevMarker = marker;
                         $scope.prevWindow = infowindow;
-                        infowindow.open(map,marker);
+                        infowindow.open(map, marker);
                         marker.open = true;
                     } else {
                         infowindow.close();
