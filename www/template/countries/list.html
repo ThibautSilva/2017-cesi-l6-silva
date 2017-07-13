@@ -1,7 +1,4 @@
-<ion-pane>
-    <ion-header-bar class="bar-stable">
-        <h1 class="title">Liste des pays</h1>
-    </ion-header-bar>
+<ion-view view-title="Liste des pays">
     <ion-content>
         <ion-list>
             <ion-item ng-repeat="country in countries" ui-sref="countryContract({iso2: country.iso2})">
@@ -9,4 +6,4 @@
             </ion-item>
         </ion-list>
     </ion-content>
-</ion-pane>
+</ion-view>
