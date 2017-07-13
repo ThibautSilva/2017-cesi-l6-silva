@@ -1,8 +1,8 @@
 <ion-view view-title="Liste des pays">
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="country in countries" ui-sref="countryContract({iso2: country.iso2})">
-                {{country.name}}
+            <ion-item ng-repeat="country in countries | orderBy:'name'" ui-sref="countryContract({iso2: country.iso2})">
+                {{country.name + " (" + country.iso2 + ")"}}
             </ion-item>
         </ion-list>
     </ion-content>

@@ -54,12 +54,12 @@ app.service("mapService", function ($http, apiHost){
                     currentDistanceProche = google.maps.geometry.spherical.computeDistanceBetween(latLng, latLngObject);
                 }
             }
-            if (display) this.displayMarker(latLngObject, $scope, false);
+            if (display) this.displayMarker(latLngObject, $scope, false, value);
         }.bind(this), log);
         return object;
     };
 
-    this.displayMarker = function(latLng, $scope, currentPos) {
+    this.displayMarker = function(latLng, $scope, currentPos, value) {
 
         var marker;
         if (currentPos) {
@@ -74,14 +74,31 @@ app.service("mapService", function ($http, apiHost){
                 animation: google.maps.Animation.DROP,
                 position: latLng
             });
+
+            google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+
+                var marker = new google.maps.Marker({
+                    map: $scope.map,
+                    animation: google.maps.Animation.DROP,
+                    position: latLng
+                });
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: value.name + ',</br>' +  value.address + ',</br>' + value.availableBikes +  ' vélo(s) disponible(s),</br> '  + value.availableFreeSpots + ' place(s) libre(s)'
+                });
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    if(!marker.open){
+
+                        infowindow.open(map,marker);
+                        marker.open = true;
+                    }
+                    else{
+                        infowindow.close();
+                        marker.open = false;
+                    }
+                });
+            });
         }
-
-        var infoWindow = new google.maps.InfoWindow({
-            content: "Here I am!"
-        });
-
-        google.maps.event.addListener(marker, 'click', function () {
-            infoWindow.open($scope.map, marker);
-        });
     };
 });

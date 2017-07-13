@@ -79,7 +79,7 @@ app.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, countri
 
         $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-        mapService.displayMarker(latLng, $scope, true);
+        mapService.displayMarker(latLng, $scope, true, null);
 
         countriesService.getContracts()
             .then(function (response) {
