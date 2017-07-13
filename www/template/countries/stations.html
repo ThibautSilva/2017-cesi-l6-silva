@@ -1,19 +1,16 @@
-<ion-pane>
-    <ion-header-bar class="bar-stable">
-        <h1 class="title">Liste des stations</h1>
-    </ion-header-bar>
+<ion-view view-title="Liste des stations">
     <ion-content>
         <div class="card" ng-repeat="station in stations">
             <div class="item item-divider">
                 {{station.name}}
             </div>
             <div class="item item-text-wrap">
-                <b>Adresse : </b>{{ station.address}} <br />
-                <b>Nombre de vélos disponible : </b>{{ station.availableBikes}}<br />
-                <b>Nombre d'emplacements libre : </b>{{ station.availableFreeSpots}}<br />
-                <b>Ouvert : </b>{{ station.open ? 'Oui' : 'Non'}}<br />
+                <b>Adresse : </b>{{ station.address}} <br/>
+                <b>Nombre de vélos disponible : </b>{{ station.availableBikes}}<br/>
+                <b>Nombre d'emplacements libre : </b>{{ station.availableFreeSpots}}<br/>
+                <b>Ouvert : </b>{{ station.open ? 'Oui' : 'Non'}}<br/>
                 <b>Accepte la CB : </b>{{ station.banking ? 'Oui' : 'Non'}}
             </div>
         </div>
     </ion-content>
-</ion-pane>
+</ion-view>
