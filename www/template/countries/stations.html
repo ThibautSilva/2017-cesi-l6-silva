@@ -5,6 +5,7 @@
                 {{station.name}}
             </div>
             <div class="item item-text-wrap">
+                <img src="https://maps.googleapis.com/maps/api/streetview?size=300x150&location= {{station.latitude}} , {{station.longitude}} &heading=151.78&pitch=-0.76"> <br/>
                 <b>Adresse : </b>{{ station.address}} <br/>
                 <b>Nombre de vélos disponible : </b>{{ station.availableBikes}}<br/>
                 <b>Nombre d'emplacements libre : </b>{{ station.availableFreeSpots}}<br/>
