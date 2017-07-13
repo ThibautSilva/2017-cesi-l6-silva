@@ -1,5 +1,6 @@
 var app = angular.module('app');
 
+//Service for retrieve data from api
 app.service("countriesService", function ($http, apiHost){
     /**
      * @return promise
@@ -55,7 +56,7 @@ app.service("mapService", function ($http, apiHost){
                     currentDistanceProche = tempDist;
                 }
             }
-            if (display) this.displayMarker(latLngObject, $scope, false, value);
+            // if (display) this.displayMarker(latLngObject, $scope, false, value);
         }.bind(this), log);
         return object;
     };
@@ -63,7 +64,7 @@ app.service("mapService", function ($http, apiHost){
     this.displayMarker = function(latLng, $scope, currentPos, value) {
 
         var marker;
-        if (currentPos) {
+        if (currentPos == 2) {
             var icon = {
                 url: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Simpleicons_Places_map-marker-with-a-person-shape.svg",
                 anchor: new google.maps.Point(25,50),
@@ -71,16 +72,24 @@ app.service("mapService", function ($http, apiHost){
             };
             marker = new google.maps.Marker({
                 map: $scope.map,
-                animation: google.maps.Animation.BOUNCE,
+                animation: google.maps.Animation.DROP,
                 position: latLng,
                 icon: icon
             });
         } else {
-            marker = new google.maps.Marker({
-                map: $scope.map,
-                animation: google.maps.Animation.DROP,
-                position: latLng
-            });
+            if (currentPos == 1) {
+                marker = new google.maps.Marker({
+                    map: $scope.map,
+                    animation: google.maps.Animation.BOUNCE,
+                    position: latLng
+                });
+            } else {
+                marker = new google.maps.Marker({
+                    map: $scope.map,
+                    animation: google.maps.Animation.DROP,
+                    position: latLng
+                });
+            }
 
             google.maps.event.addListenerOnce($scope.map, 'idle', function(){
 

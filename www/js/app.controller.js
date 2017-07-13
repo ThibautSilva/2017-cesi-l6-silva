@@ -75,13 +75,13 @@ app.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, countri
             var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             var mapOptions = {
                 center: latLng,
-                zoom: 15,
+                zoom: 13,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
 
             $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-            mapService.displayMarker(latLng, $scope, true, null);
+            mapService.displayMarker(latLng, $scope, 2, null);
 
             countriesService.getContracts()
                 .then(function (response) {
@@ -92,6 +92,15 @@ app.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, countri
                         .then(function (response) {
 
                             station = mapService.getNearest(response.data, latLng, true, $scope);
+                            var log = [];
+                            angular.forEach(response.data, function (value, key) {
+                                var latLngObject = new google.maps.LatLng(value.latitude, value.longitude);
+                                if (station.id == value.id) {
+                                    mapService.displayMarker(latLngObject, $scope, 1, value);
+                                } else {
+                                    mapService.displayMarker(latLngObject, $scope, 0, value);
+                                }
+                            }, log);
 
                         })
                         .catch(function (error) {
@@ -104,5 +113,5 @@ app.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, countri
         }, function (error) {
             console.log("Could not get location");
         });
-    }, 2000);
+    }, 1000);
 });
