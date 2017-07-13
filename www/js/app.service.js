@@ -63,13 +63,17 @@ app.service("mapService", function ($http, apiHost){
     this.displayMarker = function(latLng, $scope, currentPos, value) {
 
         var marker;
-        var prevMarker = 0;
-        var prevWindow = 0;
         if (currentPos) {
+            var icon = {
+                url: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Simpleicons_Places_map-marker-with-a-person-shape.svg",
+                anchor: new google.maps.Point(25,50),
+                scaledSize: new google.maps.Size(40,40)
+            };
             marker = new google.maps.Marker({
                 map: $scope.map,
                 animation: google.maps.Animation.BOUNCE,
-                position: latLng
+                position: latLng,
+                icon: icon
             });
         } else {
             marker = new google.maps.Marker({
@@ -79,28 +83,22 @@ app.service("mapService", function ($http, apiHost){
             });
 
             google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-                var marker = new google.maps.Marker({
-                    map: $scope.map,
-                    animation: google.maps.Animation.DROP,
-                    position: latLng
-                });
 
                 var infowindow = new google.maps.InfoWindow({
                     content: '<b>' + value.name + '</b></br>' +  value.address + ',</br>' + value.availableBikes +  ' vélo(s) disponible(s),</br> '  + value.availableFreeSpots + ' place(s) libre(s)'
                 });
 
                 google.maps.event.addListener(marker, 'click', function() {
-                    if(!marker.open){
-                        if(prevMarker != 0 && prevWindow != 0) {
-                            prevWindow.close();
-                            prevMarker.open = false;
+                    if(!marker.open) {
+                        if($scope.prevWindow != 0) {
+                            $scope.prevWindow.close();
+                            $scope.prevMarker.open = false;
                         }
-                        prevMarker = marker;
-                        prevWindow = infowindow;
+                        $scope.prevMarker = marker;
+                        $scope.prevWindow = infowindow;
                         infowindow.open(map,marker);
                         marker.open = true;
-                    }
-                    else{
+                    } else {
                         infowindow.close();
                         marker.open = false;
                     }

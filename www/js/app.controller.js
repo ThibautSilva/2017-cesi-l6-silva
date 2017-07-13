@@ -1,6 +1,5 @@
 var app = angular.module('app');
 
-// creation du controleur
 app.controller('countriesListCtrl', function ($scope, countriesService) {
     $scope.message = "test";
 
@@ -15,7 +14,6 @@ app.controller('countriesListCtrl', function ($scope, countriesService) {
         });
 });
 
-// creation du controleur
 app.controller('countryContractCtrl', function ($scope, $stateParams, countriesService) {
     $scope.message = "test";
 
@@ -34,7 +32,6 @@ app.controller('countryContractCtrl', function ($scope, $stateParams, countriesS
         });
 });
 
-// creation du controleur
 app.controller('stationsContractCtrl', function ($scope, $stateParams, countriesService, $interval) {
     $scope.message = "test";
 
@@ -71,6 +68,9 @@ app.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, countri
 
             $scope.latitude = position.coords.latitude;
             $scope.longitude = position.coords.longitude;
+
+            $scope.prevMarker = 0;
+            $scope.prevWindow = 0;
 
             var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             var mapOptions = {
