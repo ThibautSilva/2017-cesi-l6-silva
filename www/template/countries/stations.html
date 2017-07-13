@@ -1,6 +1,6 @@
 <ion-view view-title="Liste des stations">
     <ion-content>
-        <div class="card" ng-repeat="station in stations">
+        <div class="card" ng-repeat="station in stations | orderBy:'name'">
             <div class="item item-divider">
                 {{station.name}}
             </div>

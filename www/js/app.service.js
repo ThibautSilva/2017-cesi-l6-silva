@@ -45,13 +45,14 @@ app.service("mapService", function ($http, apiHost){
         var object;
         angular.forEach(data, function (value, key) {
             var latLngObject = new google.maps.LatLng(value.latitude, value.longitude);
+            var tempDist = google.maps.geometry.spherical.computeDistanceBetween(latLng, latLngObject);
             if (currentDistanceProche == 0) {
                 object = value;
-                currentDistanceProche = google.maps.geometry.spherical.computeDistanceBetween(latLng, latLngObject);
+                currentDistanceProche = tempDist;
             } else {
-                if (currentDistanceProche > google.maps.geometry.spherical.computeDistanceBetween(latLng, latLngObject)) {
+                if (currentDistanceProche > tempDist) {
                     object = value;
-                    currentDistanceProche = google.maps.geometry.spherical.computeDistanceBetween(latLng, latLngObject);
+                    currentDistanceProche = tempDist;
                 }
             }
             if (display) this.displayMarker(latLngObject, $scope, false, value);
@@ -93,7 +94,7 @@ app.service("mapService", function ($http, apiHost){
                         if(prevMarker != 0 && prevWindow != 0) {
                             prevWindow.close();
                             prevMarker.open = false;
-                        } 
+                        }
                         prevMarker = marker;
                         prevWindow = infowindow;
                         infowindow.open(map,marker);

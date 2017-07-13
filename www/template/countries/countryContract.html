@@ -1,7 +1,7 @@
 <ion-view view-title="Liste des contrats - {{country.name}}">
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="contract in contracts" ui-sref="stationDetail({id: contract.id})">
+            <ion-item ng-repeat="contract in contracts | orderBy:'name'" ui-sref="stationDetail({id: contract.id})">
                 {{contract.name}}
             </ion-item>
         </ion-list>

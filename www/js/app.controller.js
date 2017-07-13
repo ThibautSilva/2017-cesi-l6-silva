@@ -62,45 +62,48 @@ app.controller('stationsContractCtrl', function ($scope, $stateParams, countries
 app.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation, countriesService, mapService) {
     var options = {timeout: 10000, enableHighAccuracy: true};
 
-    $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+    //TIMEOUT for have fun with loader :D
+    setTimeout(function(){
+        $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
 
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
+            console.log(position.coords.latitude);
+            console.log(position.coords.longitude);
 
-        $scope.latitude = position.coords.latitude;
-        $scope.longitude = position.coords.longitude;
+            $scope.latitude = position.coords.latitude;
+            $scope.longitude = position.coords.longitude;
 
-        var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        var mapOptions = {
-            center: latLng,
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            var mapOptions = {
+                center: latLng,
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
 
-        $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-        mapService.displayMarker(latLng, $scope, true, null);
+            mapService.displayMarker(latLng, $scope, true, null);
 
-        countriesService.getContracts()
-            .then(function (response) {
+            countriesService.getContracts()
+                .then(function (response) {
 
-                contract = mapService.getNearest(response.data, latLng, false, $scope);
-                console.log("Plus proche " + contract.name);
+                    contract = mapService.getNearest(response.data, latLng, false, $scope);
+                    console.log("Plus proche " + contract.name);
 
-                countriesService.getStations(contract.id)
-                    .then(function (response) {
+                    countriesService.getStations(contract.id)
+                        .then(function (response) {
 
-                        station = mapService.getNearest(response.data, latLng, true, $scope);
-                        console.log("Plus proche " + station.name);
-                    })
-                    .catch(function (error) {
-                        console.error(error.message);
-                    });
-            })
-            .catch(function (error) {
-                console.error(error.message);
-            });
-    }, function (error) {
-        console.log("Could not get location");
-    });
+                            station = mapService.getNearest(response.data, latLng, true, $scope);
+                            console.log("Plus proche " + station.name);
+                        })
+                        .catch(function (error) {
+                            console.error(error.message);
+                        });
+                })
+                .catch(function (error) {
+                    console.error(error.message);
+                });
+        }, function (error) {
+            console.log("Could not get location");
+        });
+    }, 2000);
 });
