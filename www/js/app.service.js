@@ -62,6 +62,8 @@ app.service("mapService", function ($http, apiHost){
     this.displayMarker = function(latLng, $scope, currentPos, value) {
 
         var marker;
+        var prevMarker = 0;
+        var prevWindow = 0;
         if (currentPos) {
             marker = new google.maps.Marker({
                 map: $scope.map,
@@ -76,7 +78,6 @@ app.service("mapService", function ($http, apiHost){
             });
 
             google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-
                 var marker = new google.maps.Marker({
                     map: $scope.map,
                     animation: google.maps.Animation.DROP,
@@ -84,12 +85,17 @@ app.service("mapService", function ($http, apiHost){
                 });
 
                 var infowindow = new google.maps.InfoWindow({
-                    content: value.name + ',</br>' +  value.address + ',</br>' + value.availableBikes +  ' vélo(s) disponible(s),</br> '  + value.availableFreeSpots + ' place(s) libre(s)'
+                    content: '<b>' + value.name + '</b></br>' +  value.address + ',</br>' + value.availableBikes +  ' vélo(s) disponible(s),</br> '  + value.availableFreeSpots + ' place(s) libre(s)'
                 });
 
                 google.maps.event.addListener(marker, 'click', function() {
                     if(!marker.open){
-
+                        if(prevMarker != 0 && prevWindow != 0) {
+                            prevWindow.close();
+                            prevMarker.open = false;
+                        } 
+                        prevMarker = marker;
+                        prevWindow = infowindow;
                         infowindow.open(map,marker);
                         marker.open = true;
                     }
